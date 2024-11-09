@@ -1,0 +1,6 @@
+[submodule "Foeder-Backend"]
+	path = Foeder-Backend
+	url = https://github.com/Cyn-DM/Foeder-Backend.git
+[submodule "Foeder-Frontend"]
+	path = Foeder-Frontend
+	url = https://github.com/Cyn-DM/Foeder-Frontend.git
