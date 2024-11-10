@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/mssql/server:2019-latest
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=Test1234*
+
+# Switch to root user to install additional packages
+USER root
+
+# Install the sqlcmd tool and other necessary packages
+RUN apt-get update && apt-get install -y curl apt-transport-https gnupg2 \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools \
+    && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# Add the mssql-tools to the PATH for easier access
+ENV PATH="${PATH}:/opt/mssql-tools/bin"
+
+COPY init-database.sql /init-database.sql
+COPY entrypoint.sh /entrypoint.sh
+
+EXPOSE 1433
+
+# Use the entrypoint script
+CMD ["/bin/bash", "/entrypoint.sh"]
+
+
+
+
