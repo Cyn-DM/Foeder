@@ -7,8 +7,6 @@ services:
             - 5173:5173
         networks:
             - foeder
-        environment:
-            docker: true
     backend:
         build:
             context: .\Foeder-Backend\FoederBackend
@@ -20,18 +18,13 @@ services:
         depends_on: [db]
         environment:
             # Database connection
-            - "DbConnectionString=Server=db;Database=Foeder;User Id=SA;Password=Test1234*;TrustServerCertificate=true;"
+            - "DbConnectionString=Server=db;Database=dbi439122_foeder;User Id=SA;Password=Test1234*;TrustServerCertificate=true;"
       
             # JWT Settings
             - "JwtSettings:SecretKey=bEPRLABaWEc4dub2VYXOlvUdt2mVE2SR5waADwtgh731ijfOx"
             - "JwtSettings:Issuer=https://backend:7058"
             - "JwtSettings:Audience=https://frontend:5173"
             - "JwtSettings:AccessTokenExpiration=30"
-        command: >
-            bash -c "
-            ./wait-for-it.sh db:1433 --timeout=30 &&
-            dotnet ef database update &&
-            dotnet run"
 
     db:
         build:
@@ -45,3 +38,4 @@ services:
             
 networks:
   foeder:
+    driver: bridge
