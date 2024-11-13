@@ -28,6 +28,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
+
+      - name: test list
+        run: |
+          cd Foeder-Backend/
+          ls
+
       - name: Git Submodule Update
         run: |
           git submodule update --init --remote --recursive
