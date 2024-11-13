@@ -34,11 +34,11 @@ jobs:
           git fetch
           git branch -r
           cd ./Foeder-Backend/
-          git checkout origin/dev
+          git checkout dev
           git pull origin/dev
           cd .. 
           cd ./Foeder-Frontend/
-          git checkout origin/dev
+          git checkout dev
           git pull origin/dev
           
       - name: Commit
