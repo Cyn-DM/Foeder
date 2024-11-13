@@ -62,6 +62,7 @@ jobs:
       - name: Run Playwright E2E Tests
         run: |
           cd ./Foeder-Frontend/Foeder-Frontend
+          npm install
           npm install @playwright/test
           npx playwright test
 
