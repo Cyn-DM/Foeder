@@ -1,0 +1,41 @@
+services:
+    frontend:
+        build:
+            context: ./Foeder-Frontend/Foeder-Frontend/
+            dockerfile: Dockerfile.dev
+        ports:
+            - 5173:5173
+        networks:
+            - foeder
+    backend:
+        build:
+            context: ./Foeder-Backend/FoederBackend
+            dockerfile: Dockerfile.dev
+        ports:
+            - 7058:7058
+        networks:
+            - foeder
+        depends_on: [db]
+        environment:
+            # Database connection
+            - "DbConnectionString=Server=db;Database=dbi439122_foeder;User Id=SA;Password=Test1234*;TrustServerCertificate=true;"
+      
+            # JWT Settings
+            - "JwtSettings:SecretKey=bEPRLABaWEc4dub2VYXOlvUdt2mVE2SR5waADwtgh731ijfOx"
+            - "JwtSettings:Issuer=https://backend:7058"
+            - "JwtSettings:Audience=https://frontend:5173"
+            - "JwtSettings:AccessTokenExpiration=30"
+
+    db:
+        build:
+            context: ./Database/
+            dockerfile: Dockerfile.dev
+        ports:
+            - 1433:1433
+        networks:
+            - foeder
+
+            
+networks:
+  foeder:
+    driver: bridge
