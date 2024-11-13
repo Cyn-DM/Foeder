@@ -30,9 +30,9 @@ jobs:
 
       - name: Git Submodule Update
         run: |
-          git pull --recurse-submodules
-          git submodule update --remote --recursive
-        
+          git submodule update --init --remote --recursive
+          git submodule foreach 'git fetch origin dev && git checkout dev && git reset --hard origin/dev'
+          
       - name: Commit
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}
