@@ -30,11 +30,14 @@ jobs:
 
       - name: Git Submodule Update
         run: |
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
           cd ./Foeder-Backend/
-          git branch -r
+          git checkout origin/dev
+          git pull origin/dev
           cd .. 
           cd ./Foeder-Frontend/
-          git branch -r
+          git checkout origin/dev
+          git pull origin/dev
           
       - name: Commit
         run: |
