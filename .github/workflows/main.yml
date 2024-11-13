@@ -28,16 +28,13 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-
-      - name: test list
-        run: |
-          cd Foeder-Backend/
-          ls
-
       - name: Git Submodule Update
         run: |
-          git branch -r
-          git submodule foreach 'git fetch origin && git checkout dev && git pull origin dev'
+          cd ./Foeder-Backend/
+          git pull origin/dev
+          cd .. 
+          cd ./Foeder-Frontend/
+          git pull origin/dev
           
       - name: Commit
         run: |
