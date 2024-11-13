@@ -50,6 +50,7 @@ jobs:
       - name: mkdir if it doesn't exist
         run: |
           mkdir -p certs
+          ls
           
       - name: Build Docker Compose
         run: docker compose build
