@@ -16,7 +16,6 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.CI_TOKEN }}
-          persist-credentials: false
           
       - name: Switch to 'dev' branch
         run: |
