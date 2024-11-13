@@ -36,6 +36,7 @@ jobs:
 
       - name: Git Submodule Update
         run: |
+          git branch -r
           git submodule foreach 'git fetch origin && git checkout dev && git pull origin dev'
           
       - name: Commit
