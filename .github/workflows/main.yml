@@ -36,8 +36,7 @@ jobs:
 
       - name: Git Submodule Update
         run: |
-          git submodule update --init --remote --recursive
-          git submodule foreach 'git fetch origin dev && git checkout dev && git reset --hard origin/dev'
+          git submodule foreach 'git fetch origin dev && git checkout dev && git pull origin dev'
           
       - name: Commit
         run: |
