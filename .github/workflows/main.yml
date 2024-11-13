@@ -14,8 +14,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: recursive
-          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: true
+          token: ${{ secrets.CI_TOKEN }}
           persist-credentials: false
           
       - name: Switch to 'dev' branch
@@ -29,14 +29,15 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Update submodules to latest dev
+      - name: Git Submodule Update
         run: |
-          git submodule foreach 'git checkout dev && git pull origin dev'
-          git add .
-          git commit -m "Update submodules to latest dev" || echo "No changes to commit"
-
-      - name: Push changes
-        run: git push origin dev
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+        
+      - name: Commit
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
 
       - name: Build Docker Compose
         run: docker-compose build
