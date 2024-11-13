@@ -49,6 +49,7 @@ jobs:
 
       - name: mkdir if it doesn't exist
         run: |
+          cd ./Foeder-Frontend/Foeder-Frontend
           mkdir -p certs
           ls
           
