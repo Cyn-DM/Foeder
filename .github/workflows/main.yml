@@ -16,6 +16,7 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.CI_TOKEN }}
+          fetch-depth: 0
           
       - name: Switch to 'dev' branch
         run: |
@@ -31,7 +32,7 @@ jobs:
       - name: Git Submodule Update
         run: |
           git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-          git fetch
+          git fetch origin
           git branch -r
           cd ./Foeder-Backend/
           git checkout -b dev origin/dev || git branch -u origin/dev dev
