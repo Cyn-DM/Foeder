@@ -30,7 +30,11 @@ jobs:
 
       - name: Git Submodule Update
         run: |
-          git submodule foreach 'git checkout origin/dev && git pull origin dev'
+          cd ./Foeder-Backend/
+          git pull origin/dev
+          cd .. 
+          cd ./Foeder-Frontend/
+          git pull origin/dev
           
       - name: Commit
         run: |
