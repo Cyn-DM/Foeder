@@ -39,10 +39,10 @@ jobs:
           git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
 
       - name: Build Docker Compose
-        run: docker-compose build
+        run: docker compose build
 
       - name: Start Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Run Playwright E2E Tests
         run: |
