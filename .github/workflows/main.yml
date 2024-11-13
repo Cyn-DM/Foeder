@@ -36,11 +36,11 @@ jobs:
           git branch -r
           cd ./Foeder-Backend/
           git checkout -b dev origin/dev || git branch -u origin/dev dev
-          git pull origin/dev
+          git pull origin dev
           cd .. 
           cd ./Foeder-Frontend/
           git checkout -b dev origin/dev || git branch -u origin/dev dev
-          git pull origin/dev
+          git pull origin dev
           
       - name: Commit
         run: |
