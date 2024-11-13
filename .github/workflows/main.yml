@@ -63,7 +63,7 @@ jobs:
         run: |
           cd ./Foeder-Frontend/Foeder-Frontend
           npm install @playwright/test
-          playwright test
+          npx playwright test
 
       - name: Stop Docker Compose
         if: always()
