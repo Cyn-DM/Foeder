@@ -1,0 +1,54 @@
+name: Update Submodules and Run Tests
+
+on:
+  repository_dispatch:
+    types: [update-submodules-dev]
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
+          
+      - name: Switch to 'dev' branch
+        run: |
+          git fetch origin dev
+          git checkout dev
+          git reset --hard origin/dev
+
+      - name: Set up Git config
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Update submodules to latest dev
+        run: |
+          git submodule foreach 'git checkout dev && git pull origin dev'
+          git add .
+          git commit -m "Update submodules to latest dev" || echo "No changes to commit"
+
+      - name: Push changes
+        run: git push origin dev
+
+      - name: Build Docker Compose
+        run: docker-compose build
+
+      - name: Start Docker Compose
+        run: docker-compose up -d
+
+      - name: Run Playwright E2E Tests
+        run: |
+          npm install -g playwright
+          playwright test
+
+      - name: Stop Docker Compose
+        if: always()
+        run: docker-compose down
