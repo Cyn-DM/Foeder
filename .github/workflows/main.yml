@@ -31,10 +31,10 @@ jobs:
       - name: Git Submodule Update
         run: |
           cd ./Foeder-Backend/
-          git pull origin/dev
+          git branch -r
           cd .. 
           cd ./Foeder-Frontend/
-          git pull origin/dev
+          git branch -r
           
       - name: Commit
         run: |
