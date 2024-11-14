@@ -10,6 +10,9 @@ permissions:
 jobs:
   update-and-test:
     runs-on: ubuntu-latest
+    env:
+      foederLoginEmail: ${{ secrets.FOEDER_LOGIN_EMAIL }}
+      foederLoginPass: ${{ secrets.FOEDER_LOGIN_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
