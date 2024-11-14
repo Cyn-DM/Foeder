@@ -70,6 +70,7 @@ jobs:
           npm install playwright
           npm install @playwright/test
           npx playwright install
+          npx playwright install-deps
           npx playwright test
 
       - name: Stop Docker Compose
