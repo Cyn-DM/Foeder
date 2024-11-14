@@ -61,9 +61,7 @@ jobs:
 
       - name: Run Playwright E2E Tests
         run: |
-          cd ./Foeder-Frontend/Foeder-Frontend
-          npm install
-          npm install @playwright/test
+          docker compose exec foeder-frontend-1 /bin/bash
           npx playwright test
 
       - name: Stop Docker Compose
