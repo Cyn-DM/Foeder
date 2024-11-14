@@ -66,6 +66,7 @@ jobs:
       - name: Run Playwright E2E Tests
         run: |
           docker compose exec frontend /bin/bash
+          npm install dotenv
           npm install playwright
           npm install @playwright/test
           npx playwright test
