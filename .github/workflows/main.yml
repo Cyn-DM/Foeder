@@ -69,6 +69,7 @@ jobs:
           npm install dotenv
           npm install playwright
           npm install @playwright/test
+          npx playwright install
           npx playwright test
 
       - name: Stop Docker Compose
