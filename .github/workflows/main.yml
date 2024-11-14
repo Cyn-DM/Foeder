@@ -56,12 +56,13 @@ jobs:
       - name: Build Docker Compose
         run: docker compose build
 
-      - name: Start Docker Compose
-        run: docker compose up -d
+      - name: Start Docker Compose and run tests
+        run: |
+          docker compose up -d
 
       - name: Run Playwright E2E Tests
         run: |
-          docker compose exec foeder-frontend-1 /bin/bash
+          docker compose exec frontend /bin/bash
           npx playwright test
 
       - name: Stop Docker Compose
