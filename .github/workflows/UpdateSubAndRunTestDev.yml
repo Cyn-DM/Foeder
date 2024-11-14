@@ -1,4 +1,4 @@
-name: Update Submodules and Run Tests
+name: Update Submodules and Run Tests Dev
 
 on:
   repository_dispatch:
