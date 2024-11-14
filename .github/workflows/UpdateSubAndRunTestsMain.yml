@@ -1,0 +1,80 @@
+name: Update Submodules and Run Tests Main
+
+on:
+  repository_dispatch:
+    types: [update-submodules-main]
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-test:
+    runs-on: ubuntu-latest
+    env:
+      foederLoginEmail: ${{ secrets.FOEDER_LOGIN_EMAIL }}
+      foederLoginPass: ${{ secrets.FOEDER_LOGIN_PASSWORD }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.CI_TOKEN }}
+          fetch-depth: 0
+          
+      - name: Switch to 'dev' branch
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Set up Git config
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Git Submodule Update
+        run: |
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch origin
+          git branch -r
+          cd ./Foeder-Backend/
+          git checkout -b main origin/main || git branch -u origin/main main
+          git pull origin main
+          cd .. 
+          cd ./Foeder-Frontend/
+          git checkout -b main origin/main || git branch -u origin/main main
+          git pull origin main
+          
+      - name: Commit
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
+
+      - name: mkdir if it doesn't exist
+        run: |
+          cd ./Foeder-Frontend/Foeder-Frontend
+          mkdir -p certs
+          ls
+          
+      - name: Build Docker Compose
+        run: docker compose build
+
+      - name: Start Docker Compose and run tests
+        run: |
+          docker compose up -d
+
+      - name: Run Playwright E2E Tests
+        run: |
+          docker compose exec frontend /bin/bash
+          npm install dotenv
+          npm install playwright
+          npm install @playwright/test
+          npx playwright install
+          npx playwright install-deps
+          npm install playwright-extra
+          npm install puppeteer-extra-plugin-stealth
+          npx playwright test
+
+      - name: Stop Docker Compose
+        if: always()
+        run: docker compose down
