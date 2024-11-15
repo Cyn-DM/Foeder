@@ -81,6 +81,10 @@ jobs:
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_TOKEN}}
 
+      - name: list
+        run: |
+          ls
+
       - name: build and push docker image to registry - frontend
         uses: docker/build-push-action@v5
         with:
