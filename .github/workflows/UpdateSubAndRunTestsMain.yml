@@ -84,6 +84,7 @@ jobs:
       - name: list
         run: |
           cd Foeder-Frontend
+          cd Foeder-Frontend
           ls
 
       - name: build and push docker image to registry - frontend
