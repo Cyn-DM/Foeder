@@ -26,11 +26,26 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
+          
+      - name: mkdir if it doesn't exist
+        run: |
+          cd ./Foeder-Frontend/Foeder-Frontend
+          mkdir -p certs
+          ls
+          
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: ./Foeder-Frontend/Foeder-Frontend
           file: ./Foeder-Frontend/Foeder-Frontend/Dockerfile.dev
           push: true
-          tags: your-dockerhub-username/foeder-frontend:latest
+          tags: xcyny/foeder-frontend:latest
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Foeder-Backend/FoederBackend
+          file: ./Foeder-Backend/FoederBackend/Dockerfile.dev
+          push: true
+          tags: xcyny/foeder-backend:latest
+
