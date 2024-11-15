@@ -84,14 +84,14 @@ jobs:
       - name: build and push docker image to registry - frontend
         uses: docker/build-push-action@v5
         with:
-          context: Foeder Frontend/Foeder-Frontend/Foeder-Frontend
+          context: 'Foeder Frontend/Foeder-Frontend/Foeder-Frontend'
           push: true
           tags: foeder-frontend/latest
           
       - name: build and push docker image to registry - backend
         uses: docker/build-push-action@v5
         with:
-          context: Foeder Backend/Foeder-Backend/FoederBackend
+          context: 'Foeder Backend/Foeder-Backend/FoederBackend'
           push: true
           tags: foeder-backend/latest
 
