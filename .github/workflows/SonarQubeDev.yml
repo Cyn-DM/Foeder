@@ -1,7 +1,7 @@
 name: SonarQube Cloud
 on:
   repository_dispatch:
-    types: [static-code]
+    types: [static-code-dev]
 permissions:
   contents: write
 jobs:
@@ -20,6 +20,13 @@ jobs:
           submodules: recursive
           token: ${{ secrets.CI_TOKEN }}
           fetch-depth: 0
+          
+      - name: Switch to 'dev' branch
+        run: |
+          git fetch origin dev
+          git checkout dev
+          git reset --hard origin/dev
+
       - name: Cache SonarQube Cloud packages
         uses: actions/cache@v4
         with:
