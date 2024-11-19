@@ -60,5 +60,6 @@ jobs:
       
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
-        with:
+        with: ${{ secrets.ACTION_TOKEN }}
+          token: 
           event-type: push-to-dockerhub
