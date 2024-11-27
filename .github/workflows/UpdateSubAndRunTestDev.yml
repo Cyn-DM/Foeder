@@ -73,7 +73,8 @@ jobs:
           npx playwright install-deps
           npm install playwright-extra
           npm install puppeteer-extra-plugin-stealth
-          npx playwright test
+          sudo apt-get install -y xvfb
+          xvfb-run -- npx playwright test
 
       - name: Stop Docker Compose
         if: always()
