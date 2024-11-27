@@ -67,7 +67,7 @@ jobs:
         run: |
           docker compose exec frontend /bin/bash
           ls
-          cd ./Foeder-Frontend/Foeder-Frontend
+          cd Foeder-Frontend/Foeder-Frontend
           npm install dotenv
           npm install playwright
           npm install @playwright/test
