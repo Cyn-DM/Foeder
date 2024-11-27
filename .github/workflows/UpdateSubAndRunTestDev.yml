@@ -73,8 +73,15 @@ jobs:
           npx playwright install-deps
           npm install playwright-extra
           npm install puppeteer-extra-plugin-stealth
-          npx playwright test
+          npx playwright test --trace on
 
+      - name: Upload Playwright trace
+        if: failure() 
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-trace
+          path: '**/*.zip' 
+          
       - name: Stop Docker Compose
         if: always()
         run: docker compose down
