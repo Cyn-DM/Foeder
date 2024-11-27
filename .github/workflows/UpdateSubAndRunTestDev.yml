@@ -72,10 +72,10 @@ jobs:
           npm install dotenv
           npm install playwright
           npm install @playwright/test
-          npx playwright install
-          npx playwright install-deps
           npm install playwright-extra
           npm install puppeteer-extra-plugin-stealth
+          npx playwright install
+          npx playwright install-deps
           npx playwright test --trace on
 
       - name: Upload Playwright trace
