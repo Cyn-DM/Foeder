@@ -65,7 +65,15 @@ jobs:
 
       - name: Run Playwright E2E Tests
         run: |
-          docker compose exec frontend /bin/bash -c "ls -la"
+          docker compose exec frontend /bin/bash -c "
+          npm install dotenv &&
+          npm install playwright &&
+          npm install @playwright/test &&
+          npm install playwright-extra &&
+          npm install puppeteer-extra-plugin-stealth &&
+          npx playwright install &&
+          npx playwright install-deps &&
+          npx playwright test --trace on ""
           
       - name: Upload Playwright trace
         if: failure() 
