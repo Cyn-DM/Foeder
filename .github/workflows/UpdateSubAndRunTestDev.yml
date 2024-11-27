@@ -73,7 +73,7 @@ jobs:
           npm install puppeteer-extra-plugin-stealth &&
           npx playwright install &&
           npx playwright install-deps &&
-          npx playwright test --trace on ""
+          npx playwright test --trace on "
           
       - name: Upload Playwright trace
         if: failure() 
