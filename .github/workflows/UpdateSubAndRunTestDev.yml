@@ -74,13 +74,18 @@ jobs:
           npx playwright install-deps &&
           npx playwright install &&
           npx playwright test --trace on "
-          
+
+      - name: Copy Playwright trace files
+        if: failure()
+        run: |
+            docker cp frontend:/app/test-results ./Foeder-Frontend/Foeder-Frontend/test-results
+            
       - name: Upload Playwright trace
         if: failure() 
         uses: actions/upload-artifact@v3
         with:
           name: playwright-trace
-          path: 'test-results/**/trace.zip'
+          path: './Foeder-Frontend/Foeder-Frontend/test-results/**/*.zip'
           
       - name: Stop Docker Compose
         if: always()
