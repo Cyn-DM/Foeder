@@ -78,7 +78,7 @@ jobs:
       - name: Copy Playwright trace files
         if: failure()
         run: |
-            docker cp frontend:/app/test-results ./Foeder-Frontend/Foeder-Frontend/test-results
+            docker cp foeder-frontend-1:/app/test-results ./Foeder-Frontend/Foeder-Frontend/test-results
             
       - name: Upload Playwright trace
         if: failure() 
