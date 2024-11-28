@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: playwright-trace
-          path: '**/*.zip' 
+          path: 'test-results/**/trace.zip'
           
       - name: Stop Docker Compose
         if: always()
