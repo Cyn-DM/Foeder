@@ -73,7 +73,7 @@ jobs:
           npx playwright install-deps
           npm install playwright-extra
           npm install puppeteer-extra-plugin-stealth
-          npx playwright test
+          npx playwright test --ignore-https-errors
 
       - name: list
         run: |
