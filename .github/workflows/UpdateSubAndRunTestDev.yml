@@ -73,7 +73,7 @@ jobs:
           npm install puppeteer-extra-plugin-stealth &&
           npx playwright install-deps &&
           npx playwright install &&
-          npx playwright test --trace on --ignore-https-errors"
+          npx playwright test --trace on"
 
       - name: Copy Playwright trace files
         if: failure()
