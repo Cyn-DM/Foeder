@@ -78,7 +78,7 @@ jobs:
                             
       - name: Inspect Database via Docker
         run: |
-          docker log foeder-db-1
+          docker logs foeder-db-1
               
       - name: Inspect Database via Docker
         run: |
