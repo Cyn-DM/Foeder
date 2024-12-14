@@ -1,4 +1,10 @@
 #!/bin/bash
+
+set -e
+
+LOG_FILE=/var/log/entrypoint.log
+exec > >(tee -a $LOG_FILE) 2>&1
+
 /opt/mssql/bin/sqlservr &
 
 until /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Test1234* -Q "SELECT 1" > /dev/null 2>&1; do
