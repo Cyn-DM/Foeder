@@ -73,6 +73,14 @@ jobs:
       - name: Verify Certificates in Container
         run: docker compose run --rm frontend ls -la /app/certs
 
+      - name: Trust Root CA
+        run: |
+          docker compose exec frontend sh -c "
+              apt-get update &&
+              apt-get install -y ca-certificates &&
+              cat /app/certs/rootCA.pem >> /etc/ssl/certs/ca-certificates.crt &&
+              update-ca-certificates"
+      
       - name: Wait for Frontend
         run: |
           npx wait-on --timeout 30000 https://localhost:5173
