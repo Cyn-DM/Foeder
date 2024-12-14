@@ -50,14 +50,18 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}
           git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
 
-      - name: mkdir if it doesn't exist
+      - name: Generate certificates by running dev server
         run: |
-          cd ./Foeder-Frontend/Foeder-Frontend
-          mkdir -p certs
-          ls
-          
+          cd Foeder-Frontend/Foeder-Frontend
+          npm install
+          npx vite dev &
+          sleep 10
+          pkill node
+          ls certs
+                
       - name: Build Docker Compose
-        run: docker compose build
+        run: |
+          docker compose build
 
       - name: Start Docker Compose and run tests
         run: |
