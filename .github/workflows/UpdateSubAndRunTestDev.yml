@@ -67,6 +67,12 @@ jobs:
         run: |
           docker compose up -d
 
+      - name: Check Frontend Logs
+        run: docker compose logs frontend
+
+      - name: Verify Certificates in Container
+        run: docker compose run --rm frontend ls -la /app/certs
+
       - name: Wait for Frontend
         run: |
           npx wait-on --timeout 30000 https://localhost:5173
