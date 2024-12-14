@@ -67,12 +67,6 @@ jobs:
         run: |
           docker compose up -d
 
-      - name: Check Frontend Logs
-        run: docker compose logs frontend
-
-      - name: Verify Certificates in Container
-        run: docker compose run --rm frontend ls -la /app/certs
-
       - name: Trust Root CA
         run: |
           docker compose exec frontend sh -c "
@@ -80,12 +74,14 @@ jobs:
               apt-get install -y ca-certificates &&
               cat /app/certs/rootCA.pem >> /etc/ssl/certs/ca-certificates.crt &&
               update-ca-certificates"
-
-      - name: Test connectivity
+              
+      - name: Inspect Database via Docker
         run: |
-            docker compose exec -it frontend /bin/bash
-            curl -v https://localhost:5173
-            
+          docker exec db /opt/mssql-tools/bin/sqlcmd \
+            -S localhost -U SA -P "Test1234*" \
+            -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Users'"
+
+
       - name: Run Playwright E2E Tests
         run: |
           docker compose exec frontend /bin/bash -c "
