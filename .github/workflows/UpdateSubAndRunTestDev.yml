@@ -75,9 +75,11 @@ jobs:
               cat /app/certs/rootCA.pem >> /etc/ssl/certs/ca-certificates.crt &&
               update-ca-certificates"
               
-      - name: list containers
-        run: |              
-            docker ps
+      - name: Inspect Database via Docker
+        run: |
+          docker exec db-1 /opt/mssql-tools/bin/sqlcmd \
+            -S localhost -U SA -P "Test1234*" \
+            -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Users'"
 
       - name: Run Playwright E2E Tests
         run: |
