@@ -80,11 +80,12 @@ jobs:
               apt-get install -y ca-certificates &&
               cat /app/certs/rootCA.pem >> /etc/ssl/certs/ca-certificates.crt &&
               update-ca-certificates"
-      
-      - name: Wait for Frontend
-        run: |
-          npx wait-on --timeout 30000 https://localhost:5173
 
+      - name: Test connectivity
+        run: |
+            docker compose exec -it frontend /bin/bash
+            curl -v https://localhost:5173
+            
       - name: Run Playwright E2E Tests
         run: |
           docker compose exec frontend /bin/bash -c "
@@ -95,7 +96,7 @@ jobs:
           npm install puppeteer-extra-plugin-stealth &&
           npx playwright install-deps &&
           npx playwright install &&
-          npx playwright test --trace on"
+          DEBUG=pw:api npx playwright test --trace on"
 
       - name: Copy Playwright trace files
         if: failure()
