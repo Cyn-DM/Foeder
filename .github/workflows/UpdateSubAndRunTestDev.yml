@@ -74,6 +74,11 @@ jobs:
               apt-get install -y ca-certificates &&
               cat /app/certs/rootCA.pem >> /etc/ssl/certs/ca-certificates.crt &&
               update-ca-certificates"
+
+                            
+      - name: Inspect Database via Docker
+        run: |
+          docker log foeder-db-1
               
       - name: Inspect Database via Docker
         run: |
