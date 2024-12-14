@@ -76,15 +76,18 @@ jobs:
               update-ca-certificates"
 
                             
-      - name: Inspect Database via Docker
-        run: |
-          docker logs foeder-db-1
-              
-      - name: Inspect Database via Docker
+      - name: Run SQL Initialization Script
         run: |
           docker compose exec db /opt/mssql-tools/bin/sqlcmd \
             -S localhost -U SA -P "Test1234*" \
-            -Q "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Users'"
+            -i /init-database.sql
+
+      - name: Verify Database Schema
+        run: |
+          docker compose exec db /opt/mssql-tools/bin/sqlcmd \
+            -S localhost -U SA -P "Test1234*" \
+            -Q "SELECT name FROM sys.tables"
+            
 
       - name: Run Playwright E2E Tests
         run: |
