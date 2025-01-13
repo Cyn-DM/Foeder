@@ -56,6 +56,11 @@ jobs:
           mkdir -p certs
           ls
           
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: static-code-main
+          
       - name: Build Docker Compose
         run: docker compose build
 
@@ -84,9 +89,3 @@ jobs:
       - name: Stop Docker Compose
         if: always()
         run: docker compose down
-        
-
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          event-type: static-code-main
